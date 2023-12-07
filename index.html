@@ -80,7 +80,7 @@
 
 
 		const housegeometry = new THREE.BoxGeometry(0.25, 0.25, 0.45);
-		const housematerial = new THREE.MeshBasicMaterial({ color: 0x570000 });
+		const housematerial = new THREE.MeshPhongMaterial({ color: 0x570000,specular: 0xf50000});
 		const house1 = new THREE.Mesh(housegeometry, housematerial);
 		const house2 = new THREE.Mesh(housegeometry, housematerial);
 		house1.position.z += 0.1
@@ -94,11 +94,10 @@
 
 
         const sungeometry = new THREE.SphereGeometry( 15, 32, 16 ); 
-const sunmaterial = new THREE.MeshBasicMaterial( { color: 0xffff00 } ); 
+const sunmaterial = new THREE.MeshPhongMaterial( { color: 0xffff00 } ); 
 const sunsphere = new THREE.Mesh( sungeometry, sunmaterial );
 
  const light = new THREE.PointLight( 0xff0000, 1, 100 );
-
 
 const sungroup = new THREE.Group()
 sungroup.add(sunsphere)
