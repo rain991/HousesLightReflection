@@ -94,10 +94,11 @@
 
 
         const sungeometry = new THREE.SphereGeometry( 15, 32, 16 ); 
-const sunmaterial = new THREE.MeshPhongMaterial( { color: 0xffff00 } ); 
+const sunmaterial = new THREE.MeshPhongMaterial( { color: 0xB10F2E } ); 
 const sunsphere = new THREE.Mesh( sungeometry, sunmaterial );
 
  const light = new THREE.PointLight( 0xff0000, 1, 100 );
+ light.position.set(0,0,0)
 
 const sungroup = new THREE.Group()
 sungroup.add(sunsphere)
