@@ -134,7 +134,6 @@
 
 
 
-		let spinstatus = false
 		document.addEventListener('keydown', function (event) {
 			switch (event.code) {
 				case 'ArrowUp':
@@ -162,31 +161,38 @@
 
 
 		});
-
+		// Slider implementation
 		const sunIntensitySlider = document.getElementById("sun-intensity");
-
 		sunIntensitySlider.addEventListener("input", () => {
 			const intensity = parseFloat(sunIntensitySlider.value);
 			sunLight.intensity = intensity;
+			renderer.render(scene, camera);
 		});
-
-
 		renderer.render(scene, camera);
 		const clock = new THREE.Clock();
 		let time = Date.now();
+		let spinstatus
 		const tickOverview = () => {
-			if (spinstatus == true) {
-				const elapsedTime = clock.getElapsedTime();
-				camera.position.x = Math.cos(elapsedTime)
-				camera.position.y = Math.sin(elapsedTime)
-				renderer.render(scene, camera);
-				window.requestAnimationFrame(tickOverview);
-			}
-			const angle = elapsedTime * 0.5;
+			const elapsedTime = clock.getElapsedTime();
+			camera.position.x = Math.cos(elapsedTime)
+			camera.position.y = Math.sin(elapsedTime)
+			renderer.render(scene, camera); 
 
-			sun.position.x = Math.sin(angle) * 5;
-			sun.position.y = Math.cos(angle) * 5;
+			// Вращение sungroup вокруг центра города
+			const rotationSpeed = 0.02; // Скорость вращения
+			const center = new THREE.Vector3(0, 0, 0); // Координаты центра города
+			sungroup.position.x = center.x;
+			sungroup.position.y = center.y;
+			sungroup.rotation.z = elapsedTime * rotationSpeed;
+
+			// Позиционирование солнца относительно центра города
+			const sunOrbitRadius = 5;
+			const angle = elapsedTime * 0.5;
+			sun.position.x = center.x + Math.sin(angle) * sunOrbitRadius;
+			sun.position.y = center.y + Math.cos(angle) * sunOrbitRadius;
 			sun.position.z = 0;
+
+			requestAnimationFrame(tickOverview);
 		}
 		tickOverview()
 	</script>
