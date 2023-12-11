@@ -78,35 +78,35 @@
 		linesgroup.rotation.z = Math.PI / 2;
 		linesgroup.position.z += 0.001;
 
+		const houseGeometry = new THREE.BoxGeometry(1, 1, 1);
+      const houseMaterial = new THREE.MeshStandardMaterial({
+        color: 0xaaaaaa,
+        roughness: 0.7,
+      });
+      const house = new THREE.Mesh(houseGeometry, houseMaterial);
+      scene.add(house);
 
-		const housegeometry = new THREE.BoxGeometry(0.25, 0.25, 0.45);
-		const housematerial = new THREE.MeshPhongMaterial({ color: 0x570000,specular: 0xf50000});
-		const house1 = new THREE.Mesh(housegeometry, housematerial);
-		const house2 = new THREE.Mesh(housegeometry, housematerial);
-		house1.position.z += 0.1
-		house1.position.x += 0.25
-		house1.position.y -= 0.5
-		house2.position.z += 0.1
-		house2.position.x -= 0.25
-		house2.position.y += 0.5
-		scene.add(house1);
-		scene.add(house2);
+    
+      const windowGeometry = new THREE.BoxGeometry(0.2, 0.2, 0.05);
+      const windowMaterial = new THREE.MeshStandardMaterial({
+        color: 0x00ccff,
+        roughness: 0.1,
+      });
 
+	  const window1 = new THREE.Mesh(windowGeometry, windowMaterial);
+      window1.position.set(0.6, 1.2, 1);
+      scene.add(window1);
 
-        const sungeometry = new THREE.SphereGeometry( 15, 32, 16 ); 
-const sunmaterial = new THREE.MeshPhongMaterial( { color: 0xB10F2E } ); 
-const sunsphere = new THREE.Mesh( sungeometry, sunmaterial );
+      const window2 = new THREE.Mesh(windowGeometry, windowMaterial);
+      window2.position.set(-0.6, 1.2, 1);
+      scene.add(window2);
+		
+	  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+      scene.add(ambientLight);
 
- const light = new THREE.PointLight( 0xff0000, 1, 100 );
- light.position.set(0,0,0)
+      const sun = new THREE.PointLight(0xffffcc, 1);
+      scene.add(sun);
 
-const sungroup = new THREE.Group()
-sungroup.add(sunsphere)
-sungroup.add(light)
-scene.add(sungroup)
-sungroup.position.x+=1
-sungroup.position.y+=1
-sungroup.position.z+=1
 
 
 
@@ -153,7 +153,13 @@ sungroup.position.z+=1
 				renderer.render(scene, camera);
 				window.requestAnimationFrame(tickOverview);
 			}
+			const angle = elapsedTime * 0.5;
+
+        sun.position.x = Math.sin(angle) * 5;
+        sun.position.y = Math.cos(angle) * 5;
+        sun.position.z = 0;
 		}
+		tickOverview()
 	</script>
 </body>
 
